@@ -1,28 +1,16 @@
 import React from "react";
-import styled from "styled-components"
-import {Row, Col, Tabs, Tab} from "react-bootstrap"
+import {Container, Tabs, Tab} from "react-bootstrap"
 
 import { WhatsAppAPIGenerator } from "./tools";
 
-const HomeSection = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  font-weight: bold;
-`
-
-
 function Home () {
   return (
-    <>
+    <Container className="mt-3">
         <Tabs
           defaultActiveKey="home"
         >
           <Tab eventKey="home" title="Home">
-            <HomeSection>
+            <Container className="text-center mt-5 pt-5">
               <h1>
                 Ferramentas de marketing
               </h1>
@@ -32,7 +20,7 @@ function Home () {
               <h3>
                 Para sugerir novas ferramentas entre contato pelo e-mail: <a href="mailto:davison.vinicius360@gmail.com">davison.vinicius360@gmail.com</a>
               </h3>
-            </HomeSection>
+            </Container>
           </Tab>
           <Tab
             eventKey="whats" title="Gerador de link de api do whatsapp"
@@ -40,7 +28,7 @@ function Home () {
             <WhatsAppAPIGenerator/>
           </Tab>
         </Tabs>
-    </>
+    </Container>
   )
 }
 
