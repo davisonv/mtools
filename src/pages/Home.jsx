@@ -8,6 +8,7 @@ function Home () {
     <Container className="mt-3">
         <Tabs
           defaultActiveKey="home"
+          className="mb-5"
         >
           <Tab eventKey="home" title="Home">
             <Container className="text-center mt-5 pt-5">

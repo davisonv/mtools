@@ -1,75 +1,117 @@
 import React, {useState} from "react";
+import { Formik, Form, Field, } from 'formik';
+import {Row, Col, Container, Button, Alert} from "react-bootstrap"
+import * as Yup from 'yup';
+import "yup-phone";
 import styled from "styled-components";
-import {Form, Row, Col, Container} from "react-bootstrap"
+
+const ErrorLabel = styled.div`
+  font-size: 11px;
+  color: red;
+  margin-top: -10px;
+`
 
 function WhatsAppAPIGenerator () {
   const [whatsLink, setWhatsLink] = useState('')
 
+  const initialValues = {
+    phoneNumber: '',
+    message: '',
+  }
 
-  const generateLink = (phone, message=null) => {
+  const LinkGeneratorSchema = Yup.object().shape({
+    phoneNumber: Yup.string().phone("IN", false, "Digite um número válido.").required(),
+    message: Yup.string()
+              .min(3, 'Digite uma mensagem mais longa!')
+                .max(60, 'Digite uma mensagem mais curta!').nullable()
+  })
+
+  const allowSubmit = (isTouched, isValid) => {
+    if (isTouched && isValid) {
+      return true
+    }
+  
+    return false
+  }
+
+  const processMessage = (message) => {
+    let newMessage = message
+
+    newMessage = newMessage.replace(/\s/g, '%20')
+    console.log(newMessage)
+    return newMessage
+  }
+
+  const generateLink = (values) => {
     const baseUrl = 'https://api.whatsapp.com/send?'
-    if (phone) {
-      setWhatsLink(`${baseUrl}phone=${phone}`) 
+
+    let finalUrl = ''
+
+    if (values.phoneNumber) {
+      finalUrl = `${baseUrl}phone=${values.phoneNumber}`
     }
 
-    if (message && whatsLink !== '') {
-      setWhatsLink(prev => `${prev}&text=${message}`)
+    if (values.message) {
+      finalUrl = `${finalUrl}&text=${processMessage(values.message)}`
     }
+
+    setWhatsLink(finalUrl)
   }
 
   return (
-    <Container className="text-center">
-       <Form className="mt-5">
-        <Form.Group 
-          className="mb-5"
-          as={Row}
-        >
-          <Form.Label>Número do WhatsApp</Form.Label>
-          <Col md={{ span: 6, offset: 3 }}>
-            <Form.Control 
-              type="text" 
-              placeholder="Digite seu número do WhatsApp..." 
-              onChange={(value) => generateLink(value.nativeEvent.target.value)}
-              />
-            <Form.Text className="text-muted">
-              Sem espaços e/ou carecteres especiais (!@#$%&*...).
-            </Form.Text>
-          </Col>
+    <Container className="text-left">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={LinkGeneratorSchema}
+        onSubmit={(values) => {
+          generateLink(values);
+        }}
+      >
 
-        </Form.Group>
+        {({ errors, touched, isValid }) => (
 
-        <Form.Group 
-          className="mb-5"
-          as={Row}
-        >
-          <Form.Label>Mensagem de início da conversa</Form.Label>
-          <Col md={{ span: 6, offset: 3 }}>
-            <Form.Control 
-              type="tel" 
-              placeholder="Digite seu número do WhatsApp..." 
-              onChange={(value) => generateLink(null, value.nativeEvent.target.value)}
-              />
-            <Form.Text className="text-muted">
-              Sem espaços e/ou carecteres especiais (!@#$%&*...).
-            </Form.Text>
-          </Col>
+         <Form>
+          <Row>
+            <Col md={12}>
+              {errors.phoneNumber && touched.phoneNumber ? (
+                <ErrorLabel>{errors.phoneNumber}</ErrorLabel>
+              ) : null}
+              <Field name="phoneNumber" className="form-control mb-3"/>
+            </Col>
+          </Row>
+          
+           <Row>
+            <Col md={12}>
+              {errors.message && touched.message ? (
+                <ErrorLabel>{errors.message}</ErrorLabel>
+              ) : null}
+              <Field name="message" className="form-control mb-3"/>
+                
+            </Col>
+           </Row>
+           
+           <Button type="submit" disabled={!allowSubmit(touched, isValid)}>Gerar</Button>
 
-        </Form.Group>
+          {whatsLink && (
+            <Row>
+              <Col md={12}>
+                <div className="mt-5 mb-1 ">Link gerado:</div>
+                <Alert variant='success'>
+                  {whatsLink}
+                </Alert>
+              </Col>
+            </Row>
+          )}
+         </Form>
+       )}
 
-        <Form.Group 
-          className="mb-5"
-          as={Row}
-        >
-          <Form.Label>
-            Link gerado
-          </Form.Label>
-          <Col md={{ span: 6, offset: 3 }}>
-            <Form.Control plaintext readOnly defaultValue={whatsLink} />
-          </Col>
-        </Form.Group>
+      </Formik>
 
-      </Form>
-      </Container>
+      
+      
+
+
+    </Container>
   )
 }
 
