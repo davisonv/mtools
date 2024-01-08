@@ -65,8 +65,21 @@ function WhatsAppAPIGenerator() {
     navigator.clipboard.writeText({ whatsLink }.whatsLink);
   }
 
+  const Titulo = styled.p`
+    color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    @media only screen and (max-width: 828px) {
+      font-size: 20px;
+    }
+  `;
+
   return (
-    <Container className="text-left">
+    <Container className="text-left mt-5">
+      <Titulo>Gerador de link para Whatsapp</Titulo>
       <Formik
         initialValues={initialValues}
         validationSchema={LinkGeneratorSchema}
@@ -77,7 +90,7 @@ function WhatsAppAPIGenerator() {
         {({ errors, touched, isValid }) => (
           <Form>
             <Row>
-              <Col md={12}>
+              <Col>
                 {errors.phoneNumber && touched.phoneNumber ? (
                   <ErrorLabel>{errors.phoneNumber}</ErrorLabel>
                 ) : null}
@@ -87,7 +100,7 @@ function WhatsAppAPIGenerator() {
             </Row>
 
             <Row>
-              <Col md={12}>
+              <Col>
                 {errors.message && touched.message ? (
                   <ErrorLabel>{errors.message}</ErrorLabel>
                 ) : null}
@@ -102,7 +115,7 @@ function WhatsAppAPIGenerator() {
 
             {whatsLink && (
               <Row>
-                <Col md={12}>
+                <Col>
                   <div className="mt-5 mb-1 ">Link gerado:</div>
                   <Alert variant="success">
                     {whatsLink}
