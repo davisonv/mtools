@@ -1,5 +1,4 @@
 import WhatsAppAPIGenerator from "./WhatsAppAPIGenerator";
+import GeradorMetaTag from "./GeradorMetaTag";
 
-export {
-  WhatsAppAPIGenerator,
-}
+export { WhatsAppAPIGenerator, GeradorMetaTag };
