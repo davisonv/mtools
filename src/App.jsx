@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
 
 import MtoolsLogo from "./assets/images/MtoolsLogo.png";
-import LogoDavs from "./assets/images/LogoDavs.png";
+import LogoMango from "./assets/images/LogoMango.png";
 
 const StyledContainer = styled(Container)`
   margin-left: 5%;
@@ -27,7 +27,7 @@ const StyledColRight = styled(Col)`
 const StyledLink = styled.a`
   text-decoration: none;
   color: #000;
-  font-size: 22px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -39,22 +39,19 @@ const StyledLink = styled.a`
   }
 
   @media only screen and (max-width: 828px) {
-    font-size: 15px;
+    font-size: 12px;
   }
 `;
 const StyledImg = styled.img`
-  width: 380px;
-  @media only screen and (max-width: 828px) {
-    width: 250px;
-  }
+  width: 80%;
   @media only screen and (max-width: 500px) {
-    width: 120px;
+    width: 100%;
   }
 `;
 
 const FirstPFooter = styled.p`
   color: #000;
-  font-size: 28px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -64,7 +61,7 @@ const FirstPFooter = styled.p`
 `;
 const SecondPFooter = styled.p`
   color: #000;
-  font-size: 28px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -77,8 +74,10 @@ const StyledRow = styled(Row)`
   width: 100%;
 `;
 const Logo = styled.img`
+  width: 2%;
+
   @media only screen and (max-width: 500px) {
-    width: 60px;
+    width: 10%;
   }
 `;
 
@@ -89,7 +88,7 @@ function App() {
     <>
       <StyledContainer>
         <Row className="mt-1">
-          <StyledColLeft xs={4}>
+          <StyledColLeft xs={3}>
             <StyledImg src={MtoolsLogo} className="py-5"></StyledImg>
             <p>
               <StyledLink onClick={() => navigate("/geradorWhats")}>
@@ -112,7 +111,7 @@ function App() {
           Todos os direitos reservados
         </FirstPFooter>
         <SecondPFooter>
-          Desenvolvido pela <Logo src={LogoDavs} alt="Logo da Davs" />
+          Desenvolvido pela <Logo src={LogoMango} alt="Logo da Mango" />
         </SecondPFooter>
       </StyledRow>
       <Analytics />

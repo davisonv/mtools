@@ -67,7 +67,6 @@ function WhatsAppAPIGenerator() {
 
   const Titulo = styled.p`
     color: #000;
-    font-family: Inter;
     font-size: 32px;
     font-style: normal;
     font-weight: 600;
